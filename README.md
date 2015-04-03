@@ -1,34 +1,25 @@
 Rim Lighting
 ============
-Simple rim lighting in OpenGL and GLSL which highlight edges of objects. I
-implemented it as a post processing effect in order to separate the rim
-lighting shader code but it is arguably more efficient to do it in your
-standard light shader.
-
-+ Press `F1` to toggle free look control on/off.
-+ Press `F2` to toggle _SPOOKY_ mode on/off.
-+ Press `+` to increase rim width.
-+ Press `-` to decrease rim width.
-+ Press `1`, `2`, `3` or `4` to switch between rim colors.
-
-License
--------
-Licensed under GNU GPL v3.0.
+Simple rim lighting effect which will highlight edges of objects.
 
 Screenshot
 ----------
-![scrot](https://github.com/mharrys/rim/raw/master/scrot.png "Screenshot")
+![scrot](https://github.com/mharrys/rim/raw/master/scrot.png)
 
 How-to
 ------
-You will need a C++11 compiler, GLM, GLEW, Assimp and SDL2. Consult SConstruct for
-details.
+This project depends on [Gust](https://github.com/mharrys/gust), see its
+project page for details on dependencies.
+
+Recursive clone required
+
+    $ git clone --recursive <repository>
 
 Build and run
 
     $ scons
     $ cd bin
-    $ ./bloom
+    $ ./rim
 
 Cleanup
 
