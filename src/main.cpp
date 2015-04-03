@@ -1,30 +1,34 @@
 #include "demo.hpp"
-#include "runner.hpp"
-
-#include <memory>
+#include "highresolutionclock.hpp"
+#include "stdoutlogger.hpp"
+#include "windowimpl.hpp"
+#include "worldrunner.hpp"
 
 int main()
 {
-    WindowSetting window_setting({
-        "Demo",
-        800, 600,
-        // resize
-        true,
-        // fullscreen
-        false,
+    auto logger = std::make_shared<gst::StdoutLogger>();
+    auto window = std::make_shared<gst::WindowImpl>(
+        logger,
         // exit on close
         true,
         // exit on esc
-        true
-    });
-    auto window = std::make_shared<Window>(window_setting);
+        true,
+        // fullscreen
+        false,
+        // resize
+        false,
+        // size
+        gst::Resolution(800, 600),
+        // title
+        "Rim Lighting"
+    );
 
-    if (window->is_open()) {
-        Demo demo(window, window_setting);
-
-        Runner runner;
-        return runner.control(window, demo);
+    if (window->open()) {
+        auto runner = gst::WorldRunner();
+        auto clock = gst::HighResolutionClock();
+        auto demo = Demo(logger, window);
+        return runner.control(demo, clock, *window);
+    } else {
+        return 1;
     }
-
-    return 1;
 }
