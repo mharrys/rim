@@ -1,10 +1,15 @@
 env = Environment(
     CC='g++',
-    CCFLAGS='-std=c++11 -pedantic -Wall -Wextra -Wno-switch -O3',
-    CPPPATH='#/',
-    LIBS=['GL', 'GLEW', 'SDL2', 'assimp']
+    CCFLAGS='-std=c++11 -pedantic -Wall -Wextra -O3',
 )
 
-source = Glob('src/*.cpp')
+SConscript('lib/gust/SConscript', 'env', variant_dir='.gust', duplicate=0)
+env.Append(LIBS='gust')
+env.Append(LIBPATH='.gust/build')
+env.Append(CPPPATH=[
+    'lib/gust/lib',
+    'lib/gust/src',
+    'lib/gust/src/platform/desktop'
+])
 
-program = env.Program(target='bin/rim', source=source);
+env.Program(target='bin/rim', source=Glob('src/*.cpp'))
