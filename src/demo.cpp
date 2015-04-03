@@ -4,8 +4,6 @@ Demo::Demo(std::shared_ptr<gst::Logger> logger, std::shared_ptr<gst::Window> win
     : logger(logger),
       window(window),
       renderer(gst::Renderer::create(logger)),
-      render_size(window->get_size()),
-      programs(logger),
       controls(true, 2.5f, 2.5f)
 {
 }
@@ -35,13 +33,15 @@ void Demo::destroy()
 
 void Demo::create_scene()
 {
-    scene = gst::Scene::create_perspective({ 45.0f, render_size, 0.1f, 1000.0f });
+    scene = gst::Scene::create_perspective({ 45.0f, window->get_size(), 0.1f, 1000.0f });
     scene.get_eye().position = glm::vec3(0.0f, 0.0f, 4.5f);
 }
 
 void Demo::create_model()
 {
+    gst::ProgramPool programs(logger);
     auto rim_light_program = programs.create(RIMLIGHT_VS, RIMLIGHT_FS);
+
     auto pass = std::make_shared<gst::ShadedPass>(rim_light_program);
     pass->set_cull_face(gst::CullFace::BACK);
     pass->set_depth_test(true);

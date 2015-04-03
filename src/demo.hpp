@@ -22,9 +22,6 @@ private:
     gst::Renderer renderer;
     gst::Scene scene;
 
-    gst::Resolution render_size;
-    gst::ProgramPool programs;
-
     gst::FirstPersonControl controls;
 };
 
